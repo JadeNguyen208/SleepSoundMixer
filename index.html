@@ -587,7 +587,7 @@ function ensureAC(){var ac=getAC();if(!ac)return ac;if(ac.state==='suspended')ac
 function unlockAudio(){
   if(_acUnlocked)return;var ac=ensureAC();if(!ac)return;
   try{var buf=ac.createBuffer(1,1,22050);var src=ac.createBufferSource();src.buffer=buf;src.connect(ac.destination);src.start(0);}catch(e){}
-  _acUnlocked=true;var h=document.getElementById('audioHint');if(h)h.style.display='none';
+  _acUnlocked=true;var h=document.getElementById('audioHint');if(h)h.style.display='none';try{var _sa=document.getElementById('_iosSpeaker');if(!_sa){_sa=document.createElement('audio');_sa.id='_iosSpeaker';_sa.src='sounds/rain.wav';_sa.volume=0.001;document.body.appendChild(_sa);}_sa.play().then(function(){setTimeout(function(){_sa.pause();},300);}).catch(function(){});}catch(e){}
 }
 document.addEventListener('touchstart',function(){unlockAudio();},{once:true,passive:true});
 document.addEventListener('mousedown',function(){unlockAudio();},{once:true,passive:true});
