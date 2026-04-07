@@ -664,7 +664,7 @@ function makeSound(type,vol){
     case 'pink':{var s=pbs(c,mkP(c,sr*2));s.connect(gain);s.start();srcs.push(s);break;}
     case 'brown':{var b=c.createBuffer(1,sr*2,sr),d=b.getChannelData(0),last=0;for(var i=0;i<d.length;i++){last=(last+.02*(Math.random()*2-1))/1.02;d[i]=last*3.5;}var s=pbs(c,b);s.connect(gain);s.start();srcs.push(s);break;}
     case 'green':{var b=c.createBuffer(1,sr*3,sr),d=b.getChannelData(0),b0=0,b1=0,b2=0,b3=0;for(var i=0;i<d.length;i++){var w=Math.random()*2-1;b0=.99*b0+w*.08;b1=.97*b1+w*.12;b2=.85*b2+w*.2;b3=.6*b3+w*.3;d[i]=(b0+b1+b2+b3)/4;}var s=pbs(c,b),f1=ff(c,'highpass',200),f2=ff(c,'lowpass',2000);s.connect(f1);f1.connect(f2);f2.connect(gain);s.start();srcs.push(s);break;}
-    case 'rain':{var s=pbs(c,mkP(c,sr*2)),f=ff(c,'highpass',400);s.connect(f);f.connect(gain);s.start();srcs.push(s);break;}
+    case 'rain':{var au=new Audio('sounds/rain.wav');au.loop=true;au.volume=vol;au.play();srcs.push(au);break;}
     case 'drizzle':{var s=pbs(c,mkP(c,sr*2)),f=ff(c,'highpass',800),g=c.createGain();g.gain.value=.4;s.connect(f);f.connect(g);g.connect(gain);s.start();srcs.push(s);break;}
     case 'rainwin':{var s=pbs(c,mkP(c,sr*2)),f=ff(c,'bandpass',1200,.8);s.connect(f);f.connect(gain);s.start();srcs.push(s);(function drip(){var o=c.createOscillator(),g=c.createGain();o.frequency.value=800+Math.random()*400;g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.15);o.connect(g);g.connect(gain);o.start();o.stop(c.currentTime+.15);setTimeout(drip,1200+Math.random()*2000);})();break;}
     case 'cityrain':{var s=pbs(c,mkP(c,sr*2)),f=ff(c,'highpass',300);s.connect(f);f.connect(gain);s.start();srcs.push(s);break;}
